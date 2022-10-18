@@ -6,7 +6,7 @@ import Plutus.V1.Ledger.Crypto     as Plutus
 import qualified Ledger            as Plutus
 import Ledger                      (Address, PubKeyHash)
 import Ledger.Address              (toPubKeyHash)
-import OnChain                     (validaotr, writeValidator)
+import OnChain                     (validator, writeValidator)
 
 
 main :: IO ()
