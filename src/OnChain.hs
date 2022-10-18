@@ -12,7 +12,7 @@
 {-# LANGUAGE TypeOperators       #-}
 {-# LANGUAGE TypeApplications    #-}
 
-
+module OnChain where
 
 -- Sections of a Plutus contract
 
@@ -29,7 +29,12 @@ import qualified Ledger                                          (PaymentPubKeyH
 import qualified Plutus.V1.Ledger.Interval                       as LedgerIntervalV1
 import qualified Plutus.V1.Ledger.Value                          as LedgerValueV1
 import qualified Ledger.Ada                                      as Ada
-import qualified Ledger.Tokens                               
+import qualified Ledger.Tokens
+import qualified Data.ByteString.Lazy                            as LBS
+import qualified Data.ByteString.Short                           as SBS               
+import           Cardano.Api.Shelley                             (PlutusScript (..), FileError, PlutusScriptV2, writeFileTextEnvelope)      
+import           Codec.Serialise                                 (serialise)          
+
 
 --3 Onchain code
 
@@ -41,6 +46,9 @@ data SaleDatum = SaleDatum
     }
 
 data SaleRedeemer = ApplyOrder | CancelOrder
+
+PlutusTx.unstableMakeIsData ''SaleRedeemer -- This is to instantiate the IsData class
+PlutusTx.unstableMakeIsData ''SaleDatum
 
 
 data Simple
@@ -82,7 +90,21 @@ validateReturnTokentoSeller d context = traceIfFalse "Only the seller can get ba
         signedBySeller :: Bool
         signedBySeller = Contexts.txSignedBy txinfo $ Ledger.unPaymentPubKeyHash (dSeller d)
 
+--Boilerplate
+saleTypeV :: V2UtilsTypeScripts.TypedValidator Simple
+saleTypeV = V2UtilsTypeScripts.mkTypedValidator @Simple
+    $$(compile [|| saleValidator ||])
+    $$(compile [|| wrap ||]) where
+        wrap = V2UtilsTypeScripts.mkUntypedValidator @SaleDatum @SaleRedeemer
 
+validator :: V2LedgerApi.Validator
+validator = V2UtilsTypeScripts.validatorScript saleTypeV
 
-main :: P.IO ()
-main = P.putStrLn "Hello, Haskell!"
+validatorHash :: V2LedgerApi.ValidatorHash
+validatorHash = V2UtilsTypeScripts.validatorHash saleTypeV
+
+address :: V1LAddress.Address
+address = V1LAddress.scriptHashAddress validatorHash
+
+writeValidator :: P.FilePath -> V2LedgerApi.MintingPolicy -> P.IO (Either (FileError ()) ())
+writeValidator file = writeFileTextEnvelope @(PlutusScript PlutusScriptV2) file Nothing . PlutusScriptSerialised . SBS.toShort . LBS.toStrict . serialise . V2LedgerApi.unMintingPolicyScript
