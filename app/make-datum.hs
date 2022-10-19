@@ -19,7 +19,7 @@ import qualified Data.ByteString.Char8       as BS8
 import System.Environment ( getArgs )
 import Prelude
 --import Ledger as Ledger 
-import Ledger.Address              (toPubKeyHash)
+import Ledger.Address              (toPubKeyHash, PaymentPubKeyHash(PaymentPubKeyHash))
 import Data.String (fromString) 
 import Ledger.Tx.CardanoAPI (fromCardanoAddress, FromCardanoError)
 --import Data.ByteString.Lazy.UTF8 as BLU
@@ -32,8 +32,9 @@ import Cardano.Api.Shelley ( fromPlutusData )
 import qualified PlutusTx
 import Data.Maybe (fromJust)
 import Data.Either (fromRight, fromLeft)
-import Ledger                      (Address, PubKeyHash, PaymentPubKeyHash, AssetClass, CurrencySymbol, TokenName)
+import Ledger                      (Address, PubKeyHash, AssetClass(..), CurrencySymbol, TokenName)
 import OnChain                    (SaleDatum(SaleDatum))
+import Plutus.V1.Ledger.Value
 
 
 mkSaleDaturm :: PaymentPubKeyHash -> AssetClass -> Integer -> SaleDatum
@@ -41,6 +42,7 @@ mkSaleDaturm ppkh ac int = SaleDatum ppkh ac int
 
 getPaymentPubKeyHash :: String -> PaymentPubKeyHash
 getPaymentPubKeyHash pkhstr = PaymentPubKeyHash (fromString pkhstr :: PubKeyHash)
+--https://cardano.stackexchange.com/questions/7039/how-to-make-a-pubkeyhash-into-a-paymentpubkeyhash
 
 mainTokenSymbol :: CurrencySymbol
 mainTokenSymbol = "FUNtest"
@@ -49,16 +51,17 @@ mainToken :: TokenName
 mainToken = "FUNtest"
 
 mainTokenAC :: AssetClass
-mainTokenAC = AssetClass (mainTokenSymbol, mainToken)
+mainTokenAC = assetClass mainTokenSymbol mainToken
 
 
 main :: IO ()
 main = do
   [pkhstr'] <- getArgs
-  let ppkh = getPaymentPubKeyHash pkhstr
+  let ppkh = getPaymentPubKeyHash pkhstr'
     -- ppkh = fromRight (error "not right") $ fromCardanoAddress $ fromJust $ deserialiseAddress (AsAddressInEra AsAlonzoEra) (Data.String.fromString addr') ---should add bettter error message for maybe failture (example of good in old redeemer make file
       ac = mainTokenAC
       int = 10
+      datum = mkSaleDaturm ppkh ac int 
   print $ show ppkh
   writeData ("sale-datum.json") datum 
   putStrLn "Done"
