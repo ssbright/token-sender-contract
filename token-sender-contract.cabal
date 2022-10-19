@@ -99,3 +99,38 @@ executable make-policy
                         data-default,
                         openapi3
     default-language: Haskell2010
+
+
+
+executable make-datum
+    main-is:          make-datum.hs
+    hs-source-dirs:    app
+    -- Modules included in this executable, other than Main.
+    -- other-modules:
+
+    -- LANGUAGE extensions used by modules in this package.
+    -- other-extensions:
+    build-depends:      base ^>=4.14.3.0,
+                        aeson -any,
+                        token-sender-contract,
+                        bytestring -any,
+                        containers -any,
+                        freer-extras -any,
+                        playground-common -any,
+                        plutus-contract -any,
+                        plutus-ledger -any,
+                        plutus-ledger-api -any,
+                        plutus-ledger-constraints -any,
+                        plutus-tx -any,
+                        plutus-tx-plugin -any,
+                        plutus-script-utils -any,
+                        text -any,
+                        lens -any,
+                        cardano-api, 
+                        cardano-binary,
+                        --additionals
+                        serialise -any,
+                        base16-bytestring,
+                        data-default,
+                        openapi3
+    default-language: Haskell2010

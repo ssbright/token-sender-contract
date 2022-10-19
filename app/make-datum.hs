@@ -32,33 +32,35 @@ import Cardano.Api.Shelley ( fromPlutusData )
 import qualified PlutusTx
 import Data.Maybe (fromJust)
 import Data.Either (fromRight, fromLeft)
-import Data.Time.Clock.POSIX as Time 
-import Ledger                      (Address, PubKeyHash)
-import Stake           (ContractStake(ContractStake), StakeDatum(CStake), ODatumHash(ODHash,OUnit))
+import Ledger                      (Address, PubKeyHash, PaymentPubKeyHash)
+import OnChain                    (SaleDatum(SaleDatum))
 
 
-mkContractStake :: Address -> ODatumHash -> Ledger.POSIXTime -> ContractStake
-mkContractStake addr dh time = ContractStake addr dh time
+mkSaleDaturm :: PaymentPubKeyHash -> AssetClass -> Integer -> SaleDatum
+mkSaleDaturm ppkh ac int = SaleDatum ppkh ac int
 
-mkPoolDatum :: Address -> ODatumHash -> Ledger.POSIXTime -> StakeDatum
-mkPoolDatum addr dh time = CStake $ mkContractStake addr dh time
+getPaymentPubKeyHash :: String -> PaymentPubKeyHash
+getPaymentPubKeyHash pkhstr = PaymentPubKeyHash (fromString pkhstr :: PubKeyHash)
 
-mkODHash :: DatumHash -> ODatumHash
-mkODHash dh = ODHash dh 
+mainTokenSymbol :: Ledger.CurrencySymbol
+mainTokenSymbol = "FUNtest"
 
-mkODUnit :: ODatumHash
-mkODUnit = OUnit ()
+mainToken :: Ledger.TokenName
+mainToken = "FUNtest"
+
+mainTokenAC :: Ledger.AssetClass
+mainTokenAC = Ledger.AssetClass (mainTokenSymbol, mainToken)
+
 
 main :: IO ()
 main = do
-  [addr'] <- getArgs
-  currPOSIX' <- Time.getPOSIXTime
-  let addr = fromRight (error "not right") $ fromCardanoAddress $ fromJust $ deserialiseAddress (AsAddressInEra AsAlonzoEra) (Data.String.fromString addr') ---should add bettter error message for maybe failture (example of good in old redeemer make file)
-      currPOSIX = Ledger.POSIXTime ( round $ currPOSIX' * 1000)
-      dh = mkODUnit
-      datum   = mkPoolDatum addr dh currPOSIX 
-  print $ show addr
-  writeData ("datum-pool.json") datum 
+  [pkhstr'] <- getArgs
+  let ppkh = getPaymentPubKeyHash pkhstr
+    -- ppkh = fromRight (error "not right") $ fromCardanoAddress $ fromJust $ deserialiseAddress (AsAddressInEra AsAlonzoEra) (Data.String.fromString addr') ---should add bettter error message for maybe failture (example of good in old redeemer make file
+      ac = mainTokenAC
+      int = 10
+  print $ show ppkh
+  writeData ("sale-datum.json") datum 
   putStrLn "Done"
 -- Datum also needs to be passed when sending the token to the script (aka putting for sale)
 -- When doing this, the datum needs to be hashed.

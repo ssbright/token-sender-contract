@@ -106,5 +106,5 @@ validatorHash = V2UtilsTypeScripts.validatorHash saleTypeV
 address :: V1LAddress.Address
 address = V1LAddress.scriptHashAddress validatorHash
 
-writeValidator :: P.FilePath -> V2LedgerApi.MintingPolicy -> P.IO (Either (FileError ()) ())
-writeValidator file = writeFileTextEnvelope @(PlutusScript PlutusScriptV2) file Nothing . PlutusScriptSerialised . SBS.toShort . LBS.toStrict . serialise . V2LedgerApi.unMintingPolicyScript
+writeValidator :: P.FilePath -> V2LedgerApi.Validator -> P.IO (Either (FileError ()) ())
+writeValidator file = writeFileTextEnvelope @(PlutusScript PlutusScriptV2) file Nothing . PlutusScriptSerialised . SBS.toShort . LBS.toStrict . serialise . V2LedgerApi.unValidatorScript
