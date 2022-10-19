@@ -18,7 +18,7 @@ import Data.ByteString.Lazy qualified as LB
 import qualified Data.ByteString.Char8       as BS8
 import System.Environment ( getArgs )
 import Prelude
-import Ledger as Ledger 
+--import Ledger as Ledger 
 import Ledger.Address              (toPubKeyHash)
 import Data.String (fromString) 
 import Ledger.Tx.CardanoAPI (fromCardanoAddress, FromCardanoError)
@@ -32,7 +32,7 @@ import Cardano.Api.Shelley ( fromPlutusData )
 import qualified PlutusTx
 import Data.Maybe (fromJust)
 import Data.Either (fromRight, fromLeft)
-import Ledger                      (Address, PubKeyHash, PaymentPubKeyHash)
+import Ledger                      (Address, PubKeyHash, PaymentPubKeyHash, AssetClass, CurrencySymbol, TokenName)
 import OnChain                    (SaleDatum(SaleDatum))
 
 
@@ -42,14 +42,14 @@ mkSaleDaturm ppkh ac int = SaleDatum ppkh ac int
 getPaymentPubKeyHash :: String -> PaymentPubKeyHash
 getPaymentPubKeyHash pkhstr = PaymentPubKeyHash (fromString pkhstr :: PubKeyHash)
 
-mainTokenSymbol :: Ledger.CurrencySymbol
+mainTokenSymbol :: CurrencySymbol
 mainTokenSymbol = "FUNtest"
 
-mainToken :: Ledger.TokenName
+mainToken :: TokenName
 mainToken = "FUNtest"
 
-mainTokenAC :: Ledger.AssetClass
-mainTokenAC = Ledger.AssetClass (mainTokenSymbol, mainToken)
+mainTokenAC :: AssetClass
+mainTokenAC = AssetClass (mainTokenSymbol, mainToken)
 
 
 main :: IO ()
