@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-orefpool=$1
+orefscript=$1
 orefcust=$2
 amt=$3
-poolAddrFile=$(cat wallets/epool.address)
+poolAddrFile=$(cat script.addr)
 poolSkeyFile= wallets/epool-payment-0.skey
 custAddrFile=$(cat wallets/ecust.address)
 custSkeyFile= wallets/ecust-payment-0.skey
@@ -14,7 +14,7 @@ tnHex=46554e74657374
 tokenamt =$( expr $amt * 4 ) 
 v="$tokenamt $pid.$tnHex"
 
-echo "orefpool : $orefpool"
+echo "orefscript : $orefscript"
 echo "orefcust : $orefcust" 
 echo "amt : $amt" 
 echo "poolAddrFile: $poolAddrFile"
@@ -30,7 +30,7 @@ signedFile=tx.signed
 cardano-cli transaction build \
     --babbage-era \
     $MAGIC \
-    --tx-in $orefpool \
+    --tx-in $orefscript \
     --tx-in $orefcust \
     --required-signer $poolSKeyFile \
     --required-signer $custSKeyFile \

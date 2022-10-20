@@ -37,15 +37,15 @@ import OnChain                    (SaleDatum(SaleDatum))
 import Plutus.V1.Ledger.Value
 
 
-mkSaleDaturm :: PaymentPubKeyHash -> AssetClass -> Integer -> SaleDatum
-mkSaleDaturm ppkh ac int = SaleDatum ppkh ac int
+mkSaleDatum :: PaymentPubKeyHash -> AssetClass -> Integer -> SaleDatum
+mkSaleDatum ppkh ac int = SaleDatum ppkh ac int
 
 getPaymentPubKeyHash :: String -> PaymentPubKeyHash
 getPaymentPubKeyHash pkhstr = PaymentPubKeyHash (fromString pkhstr :: PubKeyHash)
 --https://cardano.stackexchange.com/questions/7039/how-to-make-a-pubkeyhash-into-a-paymentpubkeyhash
 
 mainTokenSymbol :: CurrencySymbol
-mainTokenSymbol = "FUNtest"
+mainTokenSymbol = "46554e74657374"
 
 mainToken :: TokenName
 mainToken = "FUNtest"
@@ -61,7 +61,7 @@ main = do
     -- ppkh = fromRight (error "not right") $ fromCardanoAddress $ fromJust $ deserialiseAddress (AsAddressInEra AsAlonzoEra) (Data.String.fromString addr') ---should add bettter error message for maybe failture (example of good in old redeemer make file
       ac = mainTokenAC
       int = 10
-      datum = mkSaleDaturm ppkh ac int 
+      datum = mkSaleDatum ppkh ac int 
   print $ show ppkh
   writeData ("sale-datum.json") datum 
   putStrLn "Done"

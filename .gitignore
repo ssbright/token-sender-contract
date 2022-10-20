@@ -22,3 +22,7 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 /wallets
+stake.policy
+user.pkh
+script.addr
+sale-datum.json
