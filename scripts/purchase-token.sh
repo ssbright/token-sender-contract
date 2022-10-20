@@ -28,19 +28,24 @@ unsignedFile=tx.unsigned
 signedFile=tx.signed
 
 
+
 cardano-cli transaction build \
     --babbage-era \
     $MAGIC \
-    --tx-in $orefscript \
     --tx-in $orefcust \
-    --tx-in-script-file stake.policy
-    --tx-in-redeemer-file unit.json
-    --required-signer $custSKeyFile \
+    --tx-in $orefscript \
+    --tx-in-script-file stake.policy \
+    --tx-in-redeemer-file unit.json \
+    --tx-in-datum-file sale-datum.json \
+    --required-signer $skeyFile \
     --tx-in-collateral $orefcust \
     --change-address $custAddrFile \
     --tx-out "$scriptAddrFile + $adaAmt lovelace" \
     --tx-out "$custAddrFile + 2000000 lovelace + $v" \
     --out-file $unsignedFile \
+
+
+
 
 cardano-cli transaction sign \
     --tx-body-file $unsignedFile \
