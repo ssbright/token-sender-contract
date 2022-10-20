@@ -39,12 +39,11 @@ cardano-cli transaction build \
     --tx-in-datum-file sale-datum.json \
     --required-signer $skeyFile \
     --tx-in-collateral $orefcust \
-    --change-address $custAddrFile \
     --tx-out "$scriptAddrFile + $adaAmt lovelace" \
     --tx-out "$custAddrFile + 2000000 lovelace + $v" \
+    --change-address $custAddrFile \
+    --protocol-params-file pparams.json \
     --out-file $unsignedFile \
-
-
 
 
 cardano-cli transaction sign \
