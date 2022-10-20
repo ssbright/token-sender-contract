@@ -6,7 +6,7 @@ orefcust=$2
 amt=$3
 scriptAddrFile=$(cat script.addr)
 custAddrFile=$(cat wallets/ecust.address)
-custSkeyFile=wallets/ecust-payment-0.skey
+skeyFile=wallets/ecust-payment-0.skey
 pid=953173ed54667a5694a150035d50296f96fb7697d7ebc4f8f6502954
 tnHex=46554e74657374
 adaAmt=$(expr $amt \* 1000000 ) 
@@ -21,8 +21,9 @@ echo "custAddrFile: $custAddrFile"
 echo "ADA spent: $adaAmt"
 echo "token number: $tokenamt"
 echo "token amount: $v"
+echo "cust skey file: $skeyFile"
 
-useraddr=$addrFile
+
 unsignedFile=tx.unsigned
 signedFile=tx.signed
 
@@ -36,7 +37,7 @@ cardano-cli transaction build \
     --tx-in-collateral $orefcust \
     --change-address $custAddrFile \
     --tx-out "$scriptAddrFile + $adaAmt lovelace" \
-    --tx-out "$custAddrFile + 2000000 lovelace +$v" \
+    --tx-out "$custAddrFile + 2000000 lovelace + $v" \
     --out-file $unsignedFile \
 
 cardano-cli transaction sign \
