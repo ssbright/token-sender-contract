@@ -33,6 +33,7 @@ cardano-cli transaction build \
     $MAGIC \
     --tx-in $orefscript \
     --tx-in $orefcust \
+    --tx-in-script-file stake.policy
     --required-signer $custSKeyFile \
     --tx-in-collateral $orefcust \
     --change-address $custAddrFile \
