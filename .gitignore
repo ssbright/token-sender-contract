@@ -26,3 +26,5 @@ stake.policy
 user.pkh
 script.addr
 sale-datum.json
+tx.signed
+tx.unsigned
