@@ -6,11 +6,11 @@ orefcust=$2
 amt=$3
 scriptAddrFile=$(cat script.addr)
 custAddrFile=$(cat wallets/ecust.address)
-custSkeyFile= wallets/ecust-payment-0.skey
+custSkeyFile=wallets/ecust-payment-0.skey
 pid=953173ed54667a5694a150035d50296f96fb7697d7ebc4f8f6502954
 tnHex=46554e74657374
-adaAmt = $( expr $amt * 1000000 ) 
-tokenamt = 1
+adaAmt=$(expr $amt \* 1000000 ) 
+tokenamt=1
 v="$tokenamt $pid.$tnHex"
 
 echo "orefscript : $orefscript"
@@ -18,7 +18,8 @@ echo "orefcust : $orefcust"
 echo "amt : $amt" 
 echo "scriptAddrFile: $scriptAddrFile"
 echo "custAddrFile: $custAddrFile"
-echo "token math: $tokenamt"
+echo "ADA spent: $adaAmt"
+echo "token number: $tokenamt"
 echo "token amount: $v"
 
 useraddr=$addrFile
