@@ -34,6 +34,7 @@ cardano-cli transaction build \
     --tx-in $orefscript \
     --tx-in $orefcust \
     --tx-in-script-file stake.policy
+    --tx-in-redeemer-file unit.json
     --required-signer $custSKeyFile \
     --tx-in-collateral $orefcust \
     --change-address $custAddrFile \
