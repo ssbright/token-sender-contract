@@ -34,10 +34,10 @@ extra-source-files:
 -- extra-source-files: CHANGELOG.md
 
 library
-    exposed-modules:   OnChain
+    exposed-modules:   OnChain, Token, Utils
     hs-source-dirs:    src
     -- Modules included in this executable, other than Main.
-    other-modules: Token, Utils
+    -- other-modules:      Token, Utils
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -144,8 +144,7 @@ executable make-datum
 executable token-policy
   main-is: token-policy.hs
   hs-source-dirs:      app
-  ghc-options:         -Wall
-    build-depends:      base ^>=4.14.3.0,
+  build-depends:        base ^>=4.14.3.0,
                         aeson -any,
                         token-sender-contract,
                         bytestring -any,
@@ -174,8 +173,7 @@ executable token-policy
 executable token-name
   main-is: token-name.hs
   hs-source-dirs:      app
-  ghc-options:         -Wall
-    build-depends:      base ^>=4.14.3.0,
+  build-depends:        base ^>=4.14.3.0,
                         aeson -any,
                         token-sender-contract,
                         bytestring -any,

@@ -5,7 +5,7 @@ module Main
 import Control.Exception    (throwIO)
 import Data.String          (IsString (..))
 import System.Environment   (getArgs)
-import Token                (tokenPolicy)
+import Token                (policy)
 import Utils                (unsafeReadTxOutRef, writeMintingPolicy)
 
 main :: IO ()
@@ -14,7 +14,7 @@ main = do
     let oref = unsafeReadTxOutRef oref'
         amt  = read amt'
         tn   = fromString tn'
-        p    = tokenPolicy oref tn amt
+        p    = policy oref tn amt
     e <- writeMintingPolicy file p
     case e of
         Left err -> throwIO $ userError $ show err
