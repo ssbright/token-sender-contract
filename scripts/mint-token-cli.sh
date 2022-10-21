@@ -34,14 +34,14 @@ cardano-cli transaction build \
     --babbage-era \
     $MAGIC \
     --tx-in $oref \
-    --tx-in-collateral $oref \
     --required-signer $skeyFile \
+    --tx-in-collateral $oref \
     --tx-out "$addr + 10000000 lovelace + $v" \
+    --change-address $addr \
     --mint "$v" \
     --mint-script-file $policyFile \
     --mint-redeemer-file unit.json \
     --metadata-json-file token_meta.json \
-    --change-address $addr \
     --protocol-params-file $ppFile \
     --out-file $unsignedFile \
 
