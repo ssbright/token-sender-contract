@@ -16,6 +16,7 @@ v="$tokenamt $pid.$tnHex"
 
 echo "orefscript : $orefscript"
 echo "orefcust : $orefcust" 
+echo "selletaddr: $selleraddr"
 echo "amt : $amt" 
 echo "scriptAddrFile: $scriptAddrFile"
 echo "custAddrFile: $custAddrFile"
@@ -49,7 +50,7 @@ cardano-cli transaction build \
 
 cardano-cli transaction sign \
     --tx-body-file $unsignedFile \
-    --signing-key-file $custSKeyFile \
+    --signing-key-file $skeyFile \
     $MAGIC \
     --out-file $signedFile
 

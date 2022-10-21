@@ -42,7 +42,7 @@ data SaleDatum = SaleDatum
     {
         dSeller :: Ledger.PaymentPubKeyHash,
         dTokenID :: Ledger.AssetClass,
-        dPrice :: Integer  --changes this to Ada.xxx
+        dPrice :: Integer 
     }
 
 data SaleRedeemer = ApplyOrder | CancelOrder

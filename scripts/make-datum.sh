@@ -1,12 +1,8 @@
 #!/bin/bash
 
-#addr=$1
-
-addr=$(cat script.addr)
-
-echo "address : $addr"
-
-cardano-cli address key-hash --payment-verification-key-file wallets/epool-stake.vkey --out-file user.pkh
 
 
-cabal exec make-datum $(cat user.pkh)
+cardano-cli address key-hash --payment-verification-key-file wallets/epool-payment-0.vkey --out-file seller.pkh
+
+
+cabal exec make-datum $(cat seller.pkh)

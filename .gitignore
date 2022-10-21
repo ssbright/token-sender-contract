@@ -28,3 +28,4 @@ script.addr
 sale-datum.json
 tx.signed
 tx.unsigned
+seller.pkh
