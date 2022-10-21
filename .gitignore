@@ -31,3 +31,4 @@ tx.unsigned
 seller.pkh
 policy.plutus
 policy.id
+mint.plutus
