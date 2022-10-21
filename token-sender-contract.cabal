@@ -37,7 +37,7 @@ library
     exposed-modules:   OnChain
     hs-source-dirs:    src
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules: Token, Utils
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -56,8 +56,10 @@ library
                         plutus-script-utils -any,
                         text -any,
                         lens -any,
-                        cardano-api, 
-                        cardano-binary,
+                        cardano-api -any, 
+                        cardano-binary -any,
+                        cardano-crypto-class -any,
+                        cardano-ledger-core -any,
                         --additionals
                         serialise -any,
                         base16-bytestring,
@@ -91,8 +93,10 @@ executable make-policy
                         plutus-script-utils -any,
                         text -any,
                         lens -any,
-                        cardano-api, 
-                        cardano-binary,
+                        cardano-api -any, 
+                        cardano-binary -any,
+                        cardano-crypto-class -any,
+                        cardano-ledger-core -any,
                         --additionals
                         serialise -any,
                         base16-bytestring,
@@ -126,11 +130,73 @@ executable make-datum
                         plutus-script-utils -any,
                         text -any,
                         lens -any,
-                        cardano-api, 
-                        cardano-binary,
+                        cardano-api -any, 
+                        cardano-binary -any,
+                        cardano-crypto-class -any,
+                        cardano-ledger-core -any,
                         --additionals
                         serialise -any,
                         base16-bytestring,
                         data-default,
                         openapi3
     default-language: Haskell2010
+
+executable token-policy
+  main-is: token-policy.hs
+  hs-source-dirs:      app
+  ghc-options:         -Wall
+    build-depends:      base ^>=4.14.3.0,
+                        aeson -any,
+                        token-sender-contract,
+                        bytestring -any,
+                        containers -any,
+                        freer-extras -any,
+                        playground-common -any,
+                        plutus-contract -any,
+                        plutus-ledger -any,
+                        plutus-ledger-api -any,
+                        plutus-ledger-constraints -any,
+                        plutus-tx -any,
+                        plutus-tx-plugin -any,
+                        plutus-script-utils -any,
+                        text -any,
+                        lens -any,
+                        cardano-api -any, 
+                        cardano-binary -any,
+                        cardano-crypto-class -any,
+                        cardano-ledger-core -any,
+                        --additionals
+                        serialise -any,
+                        base16-bytestring,
+                        data-default,
+                        openapi3
+
+executable token-name
+  main-is: token-name.hs
+  hs-source-dirs:      app
+  ghc-options:         -Wall
+    build-depends:      base ^>=4.14.3.0,
+                        aeson -any,
+                        token-sender-contract,
+                        bytestring -any,
+                        containers -any,
+                        freer-extras -any,
+                        playground-common -any,
+                        plutus-contract -any,
+                        plutus-ledger -any,
+                        plutus-ledger-api -any,
+                        plutus-ledger-constraints -any,
+                        plutus-tx -any,
+                        plutus-tx-plugin -any,
+                        plutus-script-utils -any,
+                        text -any,
+                        lens -any,
+                        cardano-api -any, 
+                        cardano-binary -any,
+                        cardano-crypto-class -any,
+                        cardano-ledger-core -any,
+                        --additionals
+                        serialise -any,
+                        base16-bytestring,
+                        data-default,
+                        openapi3
