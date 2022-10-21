@@ -1,0 +1,22 @@
+{
+      "721": {
+        "b3fb7096aedea2d41b54eb38767cd6e1830ea04aeea36ddf9c61889c": {
+          "BLANK": {
+            "name": "Blank token",
+    
+
+	    "description":"This is a blank token for testing",
+
+	   "name": "Blank token",
+	   "symbol": "BLANK",
+	   "tokenType": "token",
+	   "totalSupply": 1
+
+
+        }   
+ 
+      },
+          "version": "1.0"
+
+    }
+  }

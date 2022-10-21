@@ -29,3 +29,5 @@ sale-datum.json
 tx.signed
 tx.unsigned
 seller.pkh
+policy.plutus
+policy.id
