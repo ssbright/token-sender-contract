@@ -4,6 +4,7 @@
 orefscript=$1
 orefcust=$2
 amt=$3
+selleraddr=$(cat wallets/epool.address)
 scriptAddrFile=$(cat script.addr)
 custAddrFile=$(cat wallets/ecust.address)
 skeyFile=wallets/ecust-payment-0.skey
@@ -39,7 +40,7 @@ cardano-cli transaction build \
     --tx-in-datum-file sale-datum.json \
     --required-signer $skeyFile \
     --tx-in-collateral $orefcust \
-    --tx-out "$scriptAddrFile + $adaAmt lovelace" \
+    --tx-out "$selleraddr + $adaAmt lovelace" \
     --tx-out "$custAddrFile + 2000000 lovelace + $v" \
     --change-address $custAddrFile \
     --protocol-params-file pparams.json \

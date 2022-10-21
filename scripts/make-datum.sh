@@ -2,7 +2,7 @@
 
 #addr=$1
 
-addr=$(cat wallets/epool.address)
+addr=$(cat script.addr)
 
 echo "address : $addr"
 

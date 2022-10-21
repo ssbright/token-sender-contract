@@ -60,7 +60,7 @@ main = do
   let ppkh = getPaymentPubKeyHash pkhstr'
     -- ppkh = fromRight (error "not right") $ fromCardanoAddress $ fromJust $ deserialiseAddress (AsAddressInEra AsAlonzoEra) (Data.String.fromString addr') ---should add bettter error message for maybe failture (example of good in old redeemer make file
       ac = mainTokenAC
-      int = 10
+      int = 10000000
       datum = mkSaleDatum ppkh ac int 
   print $ show ppkh
   writeData ("sale-datum.json") datum 

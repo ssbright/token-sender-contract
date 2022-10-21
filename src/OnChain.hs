@@ -79,7 +79,7 @@ validateSellToken d context = traceIfFalse "Amount sent less than token price" c
             let 
                 valuepay = Contexts.valuePaidTo txinfo $ Ledger.unPaymentPubKeyHash (dSeller d)
             in 
-                LedgerValueV1.gt valuepay (Ada.lovelaceValueOf $ dPrice d)
+                LedgerValueV1.geq valuepay (Ada.lovelaceValueOf $ dPrice d)
 
 validateReturnTokentoSeller :: SaleDatum -> Contexts.ScriptContext -> Bool
 validateReturnTokentoSeller d context = traceIfFalse "Only the seller can get back the NFT" signedBySeller
