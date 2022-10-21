@@ -50,19 +50,22 @@ mkTokenPolicy oref tn amt red ctx = traceIfFalse "UTxO not consumed"   hasUTxO  
 
 policy :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> LedgerApiV2.MintingPolicy
 policy oref tn amt = LedgerApiV2.mkMintingPolicyScript $
-    $$(PlutusTx.compile [|| \oref' tn' amt' -> UtilsTypedScriptsMintingV2.mkUntypedMintingPolicy $ mkTokenPolicy oref' tn' amt' ||])
+    $$(PlutusTx.compile [|| \oref' tn' amt' -> fn $ mkTokenPolicy oref' tn' amt' ||])
     `PlutusTx.applyCode`
     PlutusTx.liftCode oref
     `PlutusTx.applyCode`
     PlutusTx.liftCode tn
     `PlutusTx.applyCode`
     PlutusTx.liftCode amt
+  where
+    fn :: (BuiltinData -> LedgerContextsV2.ScriptContext -> Bool) -> UtilsTypedScriptsMintingV2.UntypedMintingPolicy
+    fn = UtilsTypedScriptsMintingV2.mkUntypedMintingPolicy
 
-curSymbol :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> Ledger.CurrencySymbol
-curSymbol oref tn = UtilsScriptsV2.scriptCurrencySymbol . policy oref tn 
+--curSymbol :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> Ledger.CurrencySymbol
+--curSymbol oref tn = UtilsScriptsV2.scriptCurrencySymbol . policy oref tn 
 
-policyScript :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> LedgerApiV2.Script
-policyScript oref tn = LedgerApiV2.unMintingPolicyScript . policy oref tn
+--policyScript :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> LedgerApiV2.Script
+--policyScript oref tn = LedgerApiV2.unMintingPolicyScript . policy oref tn
 
-mintValidator :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> LedgerApiV2.Validator
-mintValidator oref tn = LedgerApiV2.Validator . policyScript oref tn
+--mintValidator :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> LedgerApiV2.Validator
+--mintValidator oref tn = LedgerApiV2.Validator . policyScript oref tn
