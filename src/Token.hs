@@ -33,8 +33,8 @@ import qualified PlutusTx
 import           PlutusTx.Prelude                    hiding (unless)
 
 {-# INLINABLE mkTokenPolicy #-}
-mkTokenPolicy :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> Integer -> LedgerContextsV2.ScriptContext -> Bool
-mkTokenPolicy oref tn amt int ctx = traceIfFalse "UTxO not consumed"   hasUTxO           &&
+mkTokenPolicy :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> BuiltinData -> LedgerContextsV2.ScriptContext -> Bool
+mkTokenPolicy oref tn amt red ctx = traceIfFalse "UTxO not consumed"   hasUTxO           &&
                                    traceIfFalse "wrong amount minted" checkMintedAmount
   where
     info :: LedgerContextsV2.TxInfo
