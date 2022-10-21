@@ -42,7 +42,6 @@ cardano-cli transaction build \
     --mint-redeemer-file unit.json \
     --metadata-json-file token_meta.json \
     --change-address $addr \
-
     --protocol-params-file $ppFile \
     --out-file $unsignedFile \
 
