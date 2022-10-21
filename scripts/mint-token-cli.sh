@@ -15,7 +15,7 @@ echo "signing key file: $skeyFile"
 ppFile=pparams.json
 cardano-cli query protocol-parameters $MAGIC --out-file $ppFile
 
-policyFile=policy.plutus
+policyFile=mint.plutus
 cabal exec token-policy $policyFile $oref $amt $tn
 
 unsignedFile=tx.unsigned
@@ -35,13 +35,13 @@ cardano-cli transaction build \
     $MAGIC \
     --tx-in $oref \
     --tx-in-collateral $oref \
-    --required-signer $skeyFile \
-    --tx-out "$addr + 1500000 lovelace + $v" \
+    --tx-out "$addr + 10000000 lovelace + $v" \
     --mint "$v" \
     --mint-script-file $policyFile \
     --mint-redeemer-file unit.json \
     --metadata-json-file token_meta.json \
     --change-address $addr \
+    --required-signer $skeyFile \
     --protocol-params-file $ppFile \
     --out-file $unsignedFile \
 
