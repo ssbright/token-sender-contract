@@ -25,7 +25,7 @@ module Token where
 
 import qualified Ledger                              as Ledger (CurrencySymbol)
 import qualified Plutus.Script.Utils.V2.Scripts      as UtilsScriptsV2
-import qualified Plutus.Script.Utils.V2.Typed.Scripts.MonetaryPolicies as UtilsTypedScriptsMintingV2
+import qualified Plutus.Script.Utils.V2.Typed.Scripts as UtilsTypedScriptsMintingV2
 import qualified Plutus.V2.Ledger.Api                as LedgerApiV2
 import           Plutus.V1.Ledger.Value                (flattenValue)
 import qualified Plutus.V2.Ledger.Contexts           as LedgerContextsV2  (ScriptContext, TxInfo)
@@ -33,11 +33,11 @@ import qualified PlutusTx
 import           PlutusTx.Prelude                    hiding (unless)
 
 {-# INLINABLE mkTokenPolicy #-}
-mkTokenPolicy :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> BuiltinData -> LedgerContextsV2.ScriptContext -> Bool
+mkTokenPolicy :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> BuiltinData -> LedgerApiV2.ScriptContext -> Bool
 mkTokenPolicy oref tn amt red ctx = traceIfFalse "UTxO not consumed"   hasUTxO           &&
                                    traceIfFalse "wrong amount minted" checkMintedAmount
   where
-    info :: LedgerContextsV2.TxInfo
+    info :: LedgerApiV2.TxInfo
     info = LedgerApiV2.scriptContextTxInfo ctx
 
     hasUTxO :: Bool
@@ -58,7 +58,7 @@ policy oref tn amt = LedgerApiV2.mkMintingPolicyScript $
     `PlutusTx.applyCode`
     PlutusTx.liftCode amt
   where
-    fn :: (BuiltinData -> LedgerContextsV2.ScriptContext -> Bool) -> UtilsTypedScriptsMintingV2.UntypedMintingPolicy
+    fn :: (BuiltinData -> LedgerApiV2.ScriptContext -> Bool) -> UtilsTypedScriptsMintingV2.UntypedMintingPolicy
     fn = UtilsTypedScriptsMintingV2.mkUntypedMintingPolicy
 
 --curSymbol :: LedgerApiV2.TxOutRef -> LedgerApiV2.TokenName -> Integer -> Ledger.CurrencySymbol
