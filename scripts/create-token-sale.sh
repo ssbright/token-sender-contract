@@ -6,7 +6,7 @@ amt=$2
 toAddr=$(cat script.addr)
 addrFile=$(cat wallets/epool.address)
 skeyFile=wallets/epool-payment-0.skey
-token=953173ed54667a5694a150035d50296f96fb7697d7ebc4f8f6502954.46554e74657374
+token=64ce70c760fe545f1681074308d135f8d94d76de50ba44d86a53e41b.424c414e4b
 
 echo "oref : $oref" 
 echo "amt : $amt" 

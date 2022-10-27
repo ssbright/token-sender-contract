@@ -45,10 +45,10 @@ getPaymentPubKeyHash pkhstr = PaymentPubKeyHash (fromString pkhstr :: PubKeyHash
 --https://cardano.stackexchange.com/questions/7039/how-to-make-a-pubkeyhash-into-a-paymentpubkeyhash
 
 mainTokenSymbol :: CurrencySymbol
-mainTokenSymbol = "46554e74657374"
+mainTokenSymbol = "424c414e4b"
 
 mainToken :: TokenName
-mainToken = "FUNtest"
+mainToken = "BLANK"
 
 mainTokenAC :: AssetClass
 mainTokenAC = assetClass mainTokenSymbol mainToken
