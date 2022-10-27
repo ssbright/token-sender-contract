@@ -17,8 +17,9 @@
 # Make Order
 
 ### Make Datum
-	Change Token Name and Currency Symbol in make-datum.hs file to your token
+	
 	$ ./scripts/make-datum.sh
+	(Change Token Name and Currency Symbol in make-datum.hs file to your token)
 
 ### Make Policy
 	$ ./scripts/make-policy.sh
